@@ -1,24 +1,25 @@
 class Solution {
 public:
-    void recur(vector<int>&candidates, int &target, int start, int sum, vector<int>temp, vector<vector<int> > &ans){
-        if(start==candidates.size() || sum>target) return ;
-        if(sum==target){
-            ans.push_back(temp) ; 
+    void recur(vector<int>&arr, int &target, int start, int curSum, vector<int>cur, vector<vector<int>>&ans){
+        if(curSum==target){
+            ans.push_back(cur) ;
             return ;
         }
-        // for(int x:temp) cout<<x<<", " ;
-        //     cout<<endl;   
+        if(curSum>target) return ;
         
-        for(int i=start; i<candidates.size(); i++){
-            temp.push_back(candidates[i]);    
-            recur(candidates, target, i, sum+candidates[i], temp, ans) ;
-            temp.pop_back(); 
+        for(int i=start; i<arr.size(); i++){
+            if(arr[i]+curSum <= target){
+                cur.push_back(arr[i]);
+                recur(arr,target,i, curSum+arr[i], cur, ans) ; 
+                cur.pop_back() ;
+            }
+                
         }
- 
     }
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<vector<int> > ans ;
-        recur(candidates, target, 0, 0, vector<int>(), ans) ;
-        return ans ; 
+        vector<vector<int>> ans ; 
+        vector<int> temp ; 
+        recur(candidates, target, 0, 0, temp, ans) ;
+        return ans; 
     }
 };
