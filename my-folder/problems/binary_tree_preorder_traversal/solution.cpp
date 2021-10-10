@@ -12,22 +12,17 @@
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
-        vector<int>v;
-        TreeNode* t = root ;
         stack<TreeNode*>s;
-        while(true){
-            if(t){
-                v.push_back(t->val);
-                s.push(t);
-                t=t->left ; 
-            }
-            else{
-                if(s.empty()) break; 
-                t=s.top();
-                s.pop();
-                t=t->right ;
-            }
+        s.push(root);
+        vector<int>ans;
+        while(!s.empty()){
+        	TreeNode* cur=s.top();
+        	s.pop();
+        	if(!cur) continue; 
+        	ans.push_back(cur->val);
+        	s.push(cur->right); // first push right because in Stack LIFO works
+            s.push(cur->left);
         }
-        return v; 
+        return ans;
     }
 };
