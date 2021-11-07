@@ -1,16 +1,12 @@
 class Solution {
 public:
-    void recur(vector<int> &nums, int target, int start, int val, int &ans){
-        if(start==nums.size()){
-            if(val==target) ans++; 
-            return ;
-        }
-        recur(nums, target, start+1, val+nums[start], ans);
-        recur(nums, target, start+1, val-nums[start], ans);
+    int recur(vector<int>&nums, int i, int target){
+        if(target==0 && i==nums.size()) return 1;
+        if(i>=nums.size()) return 0;
+        // cout<<"i="<<i<<" :: "<<target<<endl; 
+        return recur(nums, i+1, target-nums[i]) + recur(nums, i+1, target+nums[i]);
     }
     int findTargetSumWays(vector<int>& nums, int target) {
-        int ans=0; 
-        recur(nums, target, 0, 0, ans) ;
-        return ans ;
+        return recur(nums, 0, target);
     }
 };
