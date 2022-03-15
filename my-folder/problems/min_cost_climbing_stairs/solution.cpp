@@ -1,16 +1,13 @@
 class Solution {
 public:
-    vector<int>dp = vector<int>(1001, -1);
-    int recur(vector<int>&cost, int cur){
-        if(cur>= cost.size()) return 0;
-        if(dp[cur] != -1) return dp[cur];
-        int oneStep = cost[cur] + recur(cost, cur+1) ;
-        int twoStep = cost[cur] + recur(cost, cur+2) ;
-        dp[cur] = min(oneStep, twoStep);
-        // cout<<dp[cur];
-        return dp[cur];
-    }
     int minCostClimbingStairs(vector<int>& cost) {
-        return min(recur(cost, 0), recur(cost, 1));
+        int n=cost.size();
+        vector<int>dp(n+1, INT_MAX);
+        dp[0]=0, dp[1]=0;
+        for(int i=2; i<n+1; i++){
+            dp[i]=min(cost[i-1]+dp[i-1], cost[i-2]+dp[i-2]);
+        }
+        
+        return dp[n]; 
     }
 };
